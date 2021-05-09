@@ -33,13 +33,13 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
       NProgress.done()
     } else {
       // Check whether the user has obtained his permission roles
-      if (UserModule.roles.length === 0) {
+      if (UserModule.role.length === 0) {
         try {
           // Note: roles must be a object array! such as: ['admin'] or ['developer', 'editor']
           await UserModule.GetUserInfo()
-          const roles = UserModule.roles
+          const role = UserModule.role
           // Generate accessible routes map based on role
-          PermissionModule.GenerateRoutes(roles)
+          PermissionModule.GenerateRoutes(role)
           // Dynamically add accessible routes
           PermissionModule.dynamicRoutes.forEach(route => {
             router.addRoute(route)

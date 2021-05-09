@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import Cookies from 'js-cookie'
 
 // App
@@ -14,7 +15,7 @@ export const getSize = () => Cookies.get(sizeKey)
 export const setSize = (size: string) => Cookies.set(sizeKey, size)
 
 // User
-const tokenKey = 'vue_typescript_admin_access_token'
+const tokenKey = '7a50d97d1e2a4305fd5ff0e4b8afdd7c'
 export const getToken = () => Cookies.get(tokenKey)
 export const setToken = (token: string) => Cookies.set(tokenKey, token)
 export const removeToken = () => Cookies.remove(tokenKey)
