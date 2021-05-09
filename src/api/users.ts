@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import request from '@/utils/request'
 
 export const getUsers = (params: any) =>

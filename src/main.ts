@@ -38,7 +38,7 @@ Object.keys(directives).forEach(key => {
 
 // Register global filter functions
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, (filters as { [key: string ]: Function })[key])
+  // Vue.filter(key, (filters as { [key: string ]: Function })[key])
 })
 
 Vue.config.productionTip = false

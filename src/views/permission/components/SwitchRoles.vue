@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom:15px;">
-      {{ $t('permission.roles') }}： {{ roles }}
+      {{ $t('permission.roles') }}： {{ role }}
     </div>
     {{ $t('permission.switchRoles') }}：
     <el-radio-group v-model="switchRoles">
@@ -19,12 +19,12 @@ import { UserModule } from '@/store/modules/user'
   name: 'SwitchRoles'
 })
 export default class extends Vue {
-  get roles() {
-    return UserModule.roles
+  get role() {
+    return UserModule.role
   }
 
   get switchRoles() {
-    return this.roles[0]
+    return this.role
   }
 
   set switchRoles(value) {

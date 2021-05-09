@@ -11,7 +11,7 @@
     </div>
     <div style="position:relative;">
       <pan-thumb
-        :image="avatar"
+        :image="name"
         class="panThumb"
       />
       <mallki
@@ -66,8 +66,8 @@ export default class extends Vue {
     return UserModule.avatar
   }
 
-  get roles() {
-    return UserModule.roles
+  get role() {
+    return UserModule.role
   }
 }
 </script>

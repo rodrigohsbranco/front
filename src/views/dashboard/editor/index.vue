@@ -2,15 +2,13 @@
   <div class="dashboard-editor-container">
     <div class="clearfix">
       <pan-thumb
-        :image="avatar"
+        :image="name"
         style="float: left"
       >
-        Your roles:
+        Your role:
         <span
-          v-for="item in roles"
-          :key="item"
           class="info-roles"
-        >{{ item }}</span>
+        >{{ role }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">
@@ -47,12 +45,12 @@ export default class extends Vue {
     return UserModule.name
   }
 
-  get avatar() {
-    return UserModule.avatar
-  }
+  // get avatar() {
+  //   return UserModule.avatar
+  // }
 
-  get roles() {
-    return UserModule.roles
+  get role() {
+    return UserModule.role
   }
 }
 </script>

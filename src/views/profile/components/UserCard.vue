@@ -10,13 +10,13 @@
     <div class="user-profile">
       <div class="box-center">
         <pan-thumb
-          :image="user.avatar"
+          :image="user.name || ''"
           :height="'100px'"
           :width="'100px'"
           :hoverable="false"
         >
           <div>Hello</div>
-          {{ user.roles }}
+          {{ user.role }}
         </pan-thumb>
       </div>
       <div class="box-center">
@@ -24,7 +24,7 @@
           {{ user.name }}
         </div>
         <div class="user-role text-center text-muted">
-          {{ user.roles | uppercaseFirstChar }}
+          {{ user.role | uppercaseFirstChar }}
         </div>
       </div>
     </div>
