@@ -1,22 +1,29 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { IAppState } from './modules/app'
-import { IUserState } from './modules/user'
-import { ITagsViewState } from './modules/tags-view'
-import { IErrorLogState } from './modules/error-log'
-import { IPermissionState } from './modules/permission'
-import { ISettingsState } from './modules/settings'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export interface IRootState {
-  app: IAppState
-  user: IUserState
-  tagsView: ITagsViewState
-  errorLog: IErrorLogState
-  permission: IPermissionState
-  settings: ISettingsState
-}
+export default new Vuex.Store({
+  state: {
+    token: localStorage.getItem("token"),
+  },
+  mutations: {
+    LOGIN(state, data) {
+      localStorage.setItem("refreshToken", data.refresh_token);
+      localStorage.setItem(
+        "expire",
+        String(Math.floor(Date.now() / 1000) + data.expire / 1000)
+      );
+      localStorage.setItem("token", data.token);
 
-// Declare empty store first, dynamically register all modules later.
-export default new Vuex.Store<IRootState>({})
+      state.token = data.token;
+    },
+    LOGOUT(state) {
+      sessionStorage.clear();
+      localStorage.clear();
+      state.token = "";
+    },
+  },
+  actions: {},
+  modules: {},
+});
