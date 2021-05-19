@@ -45,14 +45,27 @@ import LoginService from "@/services/LoginService";
 
 @Component({})
 export default class Login extends Vue {
-  credentials: any = {
+  credentials: Login.Credentials = {
     username: "",
     password: "",
   };
 
-  sign() {
+  sign(): void {
     LoginService.login(this.credentials).then((response) => {
+      //set values in localstorage and vuex
       this.$store.commit("LOGIN", response);
+      LoginService.isValidToken(this.$store.state).then((response) => {
+        debugger;
+        if (response.isValid.sub) {
+          this.$router.push({ name: "Home" }).catch((err) => {
+            console.log(err);
+          });
+        } else {
+          this.$router.push({ name: "Login" }).catch((err) => {
+            console.log(err);
+          });
+        }
+      });
     });
   }
 }
