@@ -31,7 +31,7 @@ class LoginService {
     });
   }
 
-  isValidToken(token: string) {
+  isValidToken(token: any) {
     return new Promise<Login.TokenValid>((resolve, reject) => {
       apiNode.post(`/token`, token).then(
         (response) => resolve(response.data),

@@ -46,16 +46,18 @@ import LoginService from "@/services/LoginService";
 @Component({})
 export default class Login extends Vue {
   credentials: Login.Credentials = {
-    username: "",
-    password: "",
+    username: "admin",
+    password: "admin",
   };
 
   sign(): void {
     LoginService.login(this.credentials).then((response) => {
       //set values in localstorage and vuex
       this.$store.commit("LOGIN", response);
-      LoginService.isValidToken(this.$store.state).then((response) => {
-        debugger;
+      const postJson = {
+        token: this.$store.state.token,
+      };
+      LoginService.isValidToken(postJson).then((response) => {
         if (response.isValid.sub) {
           this.$router.push({ name: "Home" }).catch((err) => {
             console.log(err);

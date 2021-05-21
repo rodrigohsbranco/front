@@ -13,6 +13,20 @@ const routes: RouteConfig[] = [
       home: true,
     },
     component: Home,
+    beforeEnter(to, from, next) {
+      store.state.token ? next() : next("login");
+    },
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    meta: {
+      public: true,
+    },
+    beforeEnter(to, from, next) {
+      store.commit("LOGOUT");
+      next("login");
+    },
   },
   {
     path: "/",
@@ -22,10 +36,6 @@ const routes: RouteConfig[] = [
     alias: "/login",
     meta: {
       public: true,
-    },
-    beforeEnter(to, from, next) {
-      store.commit("LOGOUT");
-      next();
     },
   },
 ];

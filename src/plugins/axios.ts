@@ -39,7 +39,7 @@ function interceptorsResponseError(error: any) {
 apiNode.interceptors.request.use(
   (config) => {
     const token = localStorage.token;
-    if (token) config.headers.Authorization = token;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => {

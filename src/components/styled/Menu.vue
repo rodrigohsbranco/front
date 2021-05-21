@@ -3,14 +3,16 @@
     <v-list>
       <v-list-item>
         <v-list-item-avatar>
-          <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+          <v-img :src="`${user.avatar}`"></v-img>
         </v-list-item-avatar>
       </v-list-item>
 
       <v-list-item link>
         <v-list-item-content>
-          <v-list-item-title class="title"> John Leider </v-list-item-title>
-          <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+          <v-list-item-title class="title">
+            {{ user.name }}
+          </v-list-item-title>
+          <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
         </v-list-item-content>
 
         <v-list-item-action>
@@ -56,11 +58,30 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import userService from "@/services/UserService";
+import IuserInfo from "@/@types/user";
 
 @Component({})
 export default class extends Vue {
-  // selectedItem: 0;
-  // selectedItem: 0;
+  user: IuserInfo = {
+    username: "",
+    email: "",
+    avatar: "",
+  };
+
+  async created() {
+    const dados = await userService
+      .getInfo(this.$store.state.token)
+      .then((response) => {
+        return response;
+      });
+
+    this.user.username = dados.data.username;
+    this.user.email = dados.data.email;
+    this.user.avatar = dados.data.avatar;
+  }
+
+  // async getData(): Promise<any> {}
   items = [
     { text: "My Files", icon: "mdi-folder", link: "/Teste" },
     { text: "Shared with me", icon: "mdi-account-multiple" },

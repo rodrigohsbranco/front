@@ -18,7 +18,7 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn to="logout" icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
