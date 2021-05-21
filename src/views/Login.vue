@@ -46,8 +46,8 @@ import LoginService from "@/services/LoginService";
 @Component({})
 export default class Login extends Vue {
   credentials: Login.Credentials = {
-    username: "admin",
-    password: "admin",
+    username: "",
+    password: "",
   };
 
   sign(): void {
