@@ -38,29 +38,29 @@ const routes: RouteConfig[] = [
       public: true,
     },
   },
-  //1 item do menu
+  //items do menu
   {
-    path: "/sistema/cadastros/modulos",
-    name: "Modulo",
+    path: "",
+    name: "Sistema",
     meta: {
       menu: true,
-      icon: "home",
+      icon: "settings",
     },
     children: [
       {
-        path: "/menu",
-        name: "Menu",
+        path: "",
+        name: "Cadastros",
         meta: {
           menu: true,
-          icon: "home",
+          icon: "create",
         },
         children: [
           {
-            path: "/submenu",
-            name: "Sub",
+            path: "/sistema/cadastros/modulos",
+            name: "Módulos",
             meta: {
               menu: true,
-              icon: "png",
+              icon: "keyboard_tab",
             },
             beforeEnter(to, from, next) {
               store.state.token ? next() : next("login");

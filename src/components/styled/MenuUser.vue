@@ -1,64 +1,34 @@
 <template>
-  <div class="text-center">
-    <v-menu
-      v-model="menu"
-      :close-on-content-click="false"
-      :nudge-width="200"
-      offset-x
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="indigo" dark v-bind="attrs" v-on="on">
-          Menu as Popover
-        </v-btn>
+  <v-card height="350px">
+    <v-navigation-drawer absolute permanent right>
+      <template v-slot:prepend>
+        <v-list-item two-line>
+          <v-list-item-avatar>
+            <img src="https://randomuser.me/api/portraits/women/81.jpg" />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>Jane Smith</v-list-item-title>
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
       </template>
 
-      <v-card>
-        <v-list>
-          <v-list-item>
-            <v-list-item-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-            </v-list-item-avatar>
+      <v-divider></v-divider>
 
-            <v-list-item-content>
-              <v-list-item-title>John Leider</v-list-item-title>
-              <v-list-item-subtitle>Founder of Vuetify</v-list-item-subtitle>
-            </v-list-item-content>
+      <v-list dense>
+        <!-- <v-list-item v-for="item in items" :key="item.title">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-            <v-list-item-action>
-              <v-btn :class="fav ? 'red--text' : ''" icon @click="fav = !fav">
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
-
-        <v-divider></v-divider>
-
-        <v-list>
-          <v-list-item>
-            <v-list-item-action>
-              <v-switch v-model="message" color="purple"></v-switch>
-            </v-list-item-action>
-            <v-list-item-title>Enable messages</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-action>
-              <v-switch v-model="hints" color="purple"></v-switch>
-            </v-list-item-action>
-            <v-list-item-title>Enable hints</v-list-item-title>
-          </v-list-item>
-        </v-list>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn text @click="menu = false"> Cancel </v-btn>
-          <v-btn color="primary" text @click="menu = false"> Save </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-menu>
-  </div>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item> -->
+      </v-list>
+    </v-navigation-drawer>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -66,10 +36,11 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
-  fav = true;
-  menu = false;
-  message = false;
-  hints = true;
+  // items: [
+  //   { title: "Home"; icon: "mdi-home-city" },
+  //   { title: "My Account"; icon: "mdi-account" },
+  //   { title: "Users"; icon: "mdi-account-group-outline" }
+  // ] = [];
 }
 </script>
 
