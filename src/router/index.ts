@@ -38,6 +38,42 @@ const routes: RouteConfig[] = [
       public: true,
     },
   },
+  //1 item do menu
+  {
+    path: "/sistema/cadastros/modulos",
+    name: "Modulo",
+    meta: {
+      menu: true,
+      icon: "home",
+    },
+    children: [
+      {
+        path: "/menu",
+        name: "Menu",
+        meta: {
+          menu: true,
+          icon: "home",
+        },
+        children: [
+          {
+            path: "/submenu",
+            name: "Sub",
+            meta: {
+              menu: true,
+              icon: "png",
+            },
+            beforeEnter(to, from, next) {
+              store.state.token ? next() : next("login");
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/views/sistema/cadastros/Modulos.vue"
+              ),
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

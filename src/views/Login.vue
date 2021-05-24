@@ -46,13 +46,12 @@ import LoginService from "@/services/LoginService";
 @Component({})
 export default class Login extends Vue {
   credentials: Login.Credentials = {
-    username: "",
-    password: "",
+    username: "teste",
+    password: "teste",
   };
 
   sign(): void {
     LoginService.login(this.credentials).then((response) => {
-      //set values in localstorage and vuex
       this.$store.commit("LOGIN", response);
       const postJson = {
         token: this.$store.state.token,

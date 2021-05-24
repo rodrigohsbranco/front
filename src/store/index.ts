@@ -30,6 +30,7 @@ export default new Vuex.Store({
       sessionStorage.clear();
       localStorage.clear();
       state.token = "";
+      state.userId = "";
     },
   },
   actions: {},

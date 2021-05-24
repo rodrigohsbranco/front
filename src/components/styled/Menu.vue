@@ -10,7 +10,7 @@
       <v-list-item link>
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{ user.name }}
+            {{ user.username }}
           </v-list-item-title>
           <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
         </v-list-item-content>
@@ -22,37 +22,23 @@
     </v-list>
     <v-divider></v-divider>
 
-    <v-list>
-      <v-list-item>
-        <v-list-item-icon>
-          <v-icon>mdi-home</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-title link>Home</v-list-item-title>
-      </v-list-item>
-
-      <v-list-group :value="true" prepend-icon="mdi-account-circle">
-        <template v-slot:activator>
-          <v-list-item-title>Users</v-list-item-title>
-        </template>
-
-        <v-list-group :value="true" no-action sub-group>
-          <template v-slot:activator>
-            <v-list-item-content>
-              <v-list-item-title>Admin</v-list-item-title>
-            </v-list-item-content>
-          </template>
-
-          <v-list-item v-for="(item, i) in items" :key="i" :to="item.link" link>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
-
-            <v-list-item-icon>
-              <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-        </v-list-group>
-      </v-list-group>
-    </v-list>
+    <v-treeview
+      v-model="tree"
+      :items="items"
+      activatable
+      item-key="name"
+      open-on-click
+    >
+      <template v-slot:prepend="{ item, open }">
+        <v-icon v-if="!item.icon">
+          {{ open ? "mdi-folder-open" : "mdi-folder" }}
+          {{ item.icon }}
+        </v-icon>
+        <v-icon v-else>
+          {{ files[item] }}
+        </v-icon>
+      </template>
+    </v-treeview>
   </div>
 </template>
 
@@ -60,6 +46,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import userService from "@/services/UserService";
 import IuserInfo from "@/@types/user";
+import router from "@/router";
+import { RouteConfig } from "vue-router/types/router";
 
 @Component({})
 export default class extends Vue {
@@ -68,29 +56,98 @@ export default class extends Vue {
     email: "",
     avatar: "",
   };
+  homeLink = "/home";
+  items: RouteConfig[] = [];
 
-  async created() {
-    const dados = await userService
-      .getInfo(this.$store.state.token)
-      .then((response) => {
-        return response;
-      });
+  files: any = {
+    html: "mdi-language-html5",
+    js: "mdi-nodejs",
+    json: "mdi-code-json",
+    md: "mdi-language-markdown",
+    pdf: "mdi-file-pdf",
+    png: "mdi-file-image",
+    txt: "mdi-file-document-outline",
+    xls: "mdi-file-excel",
+  };
+  tree: [] = [];
+  // items: [] = [
+  //   {
+  //     name: ".git",
+  //   },
+  //   {
+  //     name: "node_modules",
+  //   },
+  //   {
+  //     name: "public",
+  //     children: [
+  //       {
+  //         name: "static",
+  //         children: [
+  //           {
+  //             name: "logo.png",
+  //             file: "png",
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         name: "favicon.ico",
+  //         file: "png",
+  //       },
+  //       {
+  //         name: "index.html",
+  //         file: "html",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: ".gitignore",
+  //     file: "txt",
+  //   },
+  //   {
+  //     name: "babel.config.js",
+  //     file: "js",
+  //   },
+  //   {
+  //     name: "package.json",
+  //     file: "json",
+  //   },
+  //   {
+  //     name: "README.md",
+  //     file: "md",
+  //   },
+  //   {
+  //     name: "vue.config.js",
+  //     file: "js",
+  //   },
+  //   {
+  //     name: "yarn.lock",
+  //     file: "txt",
+  //   },
+  // ];
 
-    this.user.username = dados.data.username;
-    this.user.email = dados.data.email;
-    this.user.avatar = dados.data.avatar;
+  // montaMenu(dados: Array): [] {
+  //   dados.reduce((unico, item) => {
+  //     return unico.includes(item) ? unico : [...unico, item];
+  //   }, []);
+  // }
+  async mounted(): Promise<void> {
+    await userService.getInfo(this.$store.state.token).then((response) => {
+      this.user.username = response.data.user.username;
+      this.user.email = response.data.user.email;
+      this.user.avatar = response.data.user.avatar;
+
+      // this.dados = response.data.menus;
+      // this.dados.push(this.$router.options.routes);
+      this.$router.options.routes?.map((item) =>
+        item.meta.menu ? this.items.push(item) : null
+      );
+      // console.log(this.items);
+    });
   }
 
-  // async getData(): Promise<any> {}
-  items = [
-    { text: "My Files", icon: "mdi-folder", link: "/Teste" },
-    { text: "Shared with me", icon: "mdi-account-multiple" },
-    { text: "Starred", icon: "mdi-star" },
-    { text: "Recent", icon: "mdi-history" },
-    { text: "Offline", icon: "mdi-check-circle" },
-    { text: "Uploads", icon: "mdi-upload" },
-    { text: "Backups", icon: "mdi-cloud-upload" },
-  ];
+  primeiraEmMaiuscula(elemento: string): string {
+    return elemento.charAt(0).toUpperCase() + elemento.slice(1);
+  }
 }
 </script>
 

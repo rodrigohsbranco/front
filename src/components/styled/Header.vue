@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-navigation-drawer dense app v-model="drawer">
+    <v-navigation-drawer
+      dark
+      color="primary lighten-1"
+      dense
+      app
+      v-model="drawer"
+    >
       <Menu />
     </v-navigation-drawer>
     <v-app-bar app>
@@ -28,10 +34,12 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Menu from "@/components/styled/Menu.vue";
+import MenuUser from "@/components/styled/MenuUser.vue";
 
 @Component({
   components: {
     Menu,
+    MenuUser,
   },
 })
 export default class Header extends Vue {
