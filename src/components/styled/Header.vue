@@ -2,7 +2,7 @@
   <div>
     <v-navigation-drawer
       dark
-      color="primary lighten-1"
+      color="primary darken-4"
       dense
       app
       v-model="drawer"
