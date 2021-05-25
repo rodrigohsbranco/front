@@ -7,17 +7,13 @@
         </v-list-item-avatar>
       </v-list-item>
 
-      <v-list-item link>
+      <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
             {{ user.username }}
           </v-list-item-title>
           <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
         </v-list-item-content>
-
-        <v-list-item-action>
-          <v-icon>mdi-menu-down</v-icon>
-        </v-list-item-action>
       </v-list-item>
     </v-list>
     <v-divider></v-divider>
@@ -28,12 +24,14 @@
       activatable
       item-key="name"
       open-on-click
+      dense
+      transition
     >
-      <template :to="item.path" v-slot:prepend="{ item, open }">
+      <template sm v-slot:prepend="{ item, open }">
         <v-icon v-if="!item.meta.icon">
           {{ open ? "mdi-folder-open" : "mdi-folder" }}
         </v-icon>
-        <v-icon v-else>
+        <v-icon :to="item.path" v-else>
           {{ item.meta.icon }}
         </v-icon>
       </template>

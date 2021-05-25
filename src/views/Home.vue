@@ -1,9 +1,7 @@
 <template>
   <div>
-    <v-app>
-      <Header />
-      <Dashboard />
-    </v-app>
+    <Header />
+    <Dashboard />
   </div>
 </template>
 
