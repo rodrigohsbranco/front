@@ -25,9 +25,10 @@
       </v-btn>
 
       <v-btn to="logout" icon>
-        <v-icon>mdi-dots-vertical</v-icon>
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
+    <!-- <menu-user /> -->
   </div>
 </template>
 
@@ -44,7 +45,7 @@ import MenuUser from "@/components/styled/MenuUser.vue";
 })
 export default class Header extends Vue {
   drawer = true;
-  title = "Next";
+  title = "Sistema de Tributos e Receitas";
 }
 </script>
 

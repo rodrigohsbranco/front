@@ -2,7 +2,8 @@
   <div>
     <v-container>
       <v-row>
-        <h1>Dashboard</h1>
+        <h1>Pessoas</h1>
+        <router-view />
       </v-row>
     </v-container>
   </div>

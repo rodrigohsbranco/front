@@ -3,7 +3,7 @@
     <v-footer fixed color="primary darken-4" padless>
       <v-row justify="center" no-gutters>
         <v-col class="primary darken-4 py-2 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+          {{ new Date().getFullYear() }} — <strong>STR</strong>
         </v-col>
       </v-row>
     </v-footer>

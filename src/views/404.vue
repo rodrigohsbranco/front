@@ -1,10 +1,7 @@
 <template>
   <div>
-    <v-container>
-      <v-row>
-        <h1>Dashboard</h1>
-      </v-row>
-    </v-container>
+    <h1>404 - Page Not Found</h1>
+    <p>This page no longer exists or was moved to another location.</p>
   </div>
 </template>
 

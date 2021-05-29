@@ -1,26 +1,19 @@
 <template>
-  <div>
-    <v-app>
-      <v-main>
-        <v-container fluid>
-          <router-view></router-view>
-        </v-container>
-      </v-main>
-      <Footer />
-    </v-app>
-  </div>
+  <Main />
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import vuetify from "@/plugins/vuetify";
-import Footer from "@/components/styled/Footer.vue";
+import Main from "@/components/Main.vue";
 
 @Component({
   vuetify,
   components: {
-    Footer,
+    Main,
   },
 })
 export default class extends Vue {}
 </script>
+
+<style></style>

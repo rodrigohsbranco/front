@@ -1,13 +1,18 @@
 <template>
   <div>
-    <v-app> CADASTRO DE MODULOS </v-app>
+    <v-container>
+      <v-row>
+        <h1>Módulos</h1>
+        <router-view />
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
+@Component
 export default class extends Vue {}
 </script>
 

@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem("token"),
     userId: localStorage.getItem("userId"),
+    expire: localStorage.getItem("expire"),
   },
 
   getters: {
@@ -17,20 +18,19 @@ export default new Vuex.Store({
   mutations: {
     LOGIN(state, data) {
       // localStorage.setItem("refreshToken", data.refresh_token);
-      localStorage.setItem(
-        "expire",
-        String(Math.floor(Date.now() / 1000) + data.expire / 1000)
-      );
+      localStorage.setItem("expire", data.expire);
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user.id);
       state.userId = data.user.id;
       state.token = data.token;
+      state.expire = data.expire;
     },
     LOGOUT(state) {
       sessionStorage.clear();
       localStorage.clear();
       state.token = "";
       state.userId = "";
+      state.expire = "";
     },
   },
   actions: {},
