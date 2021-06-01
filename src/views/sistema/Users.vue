@@ -2,7 +2,121 @@
   <div>
     <v-app>
       <v-container fluid>
-        <v-toolbar-title>Usuários</v-toolbar-title>
+        <v-row justify="space-around">
+        <v-toolbar-title class="text-center">Usuários</v-toolbar-title>
+
+  <v-col md="4">
+   <v-autocomplete
+      v-model="select"
+      :loading="loading"
+      :items="items"
+      :search-input.sync="search"
+      cache-items
+      class="mx-4"
+      flat
+      hide-no-data
+      hide-details
+      label="O que vamos encontrar?"
+      solo-inverted
+      filter
+    ></v-autocomplete>
+</v-col>
+
+    <v-btn
+    elevation="2"
+    color="primary"
+    justify="flex-end"
+    right
+    @click="dialog = !dialog">Inserir
+    <v-icon>mdi-plus</v-icon>
+    </v-btn>
+
+        <v-dialog
+        v-model="dialog"
+        width="800px"
+      >
+        <v-card>
+          <v-card-title class="grey darken-2">
+            Criar novo Usuário
+          </v-card-title>
+          <v-container>
+            <v-row class="mx-2">
+              <v-col
+                class="align-center justify-space-between"
+                cols="12"
+              >
+                <v-row
+                  align="center"
+                  class="mr-0"
+                >
+                  <v-avatar
+                    size="40px"
+                    class="mx-3"
+                  >
+                    <img
+                      src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
+                      alt=""
+                    >
+                  </v-avatar>
+                  <v-text-field
+                    placeholder="Nome do funcionário"
+                  ></v-text-field>
+                </v-row>
+              </v-col>
+
+              <v-col cols="6">
+                <v-text-field
+                  prepend-icon="mdi-account-card-details-outline"
+                  placeholder="CPF"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  placeholder="RG"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  prepend-icon="mdi-mail"
+                  placeholder="Email"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  type="tel"
+                  prepend-icon="mdi-phone"
+                  placeholder="(000) 000 - 0000"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  prepend-icon="mdi-text"
+                  placeholder="Setor do funcionário"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-card-actions>
+            <!--<v-btn
+              text
+              color="primary"
+            >More</v-btn>-->
+            <v-spacer></v-spacer>
+            
+            <v-btn
+              color="error"
+              @click="dialog = false"
+            >Cancel</v-btn>
+            <v-btn
+              color="info"
+              @click="dialog = false"
+            >Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+ 
+
 
         <v-data-table
           :headers="headers"
@@ -16,6 +130,7 @@
             </span>
           </template>
         </v-data-table>
+         </v-row>
       </v-container>
     </v-app>
     <router-view />
