@@ -47,4 +47,7 @@ export default class extends Vue {
 .v-btn {
   text-transform: none !important;
 }
+#app {
+  overflow: hidden;
+}
 </style>

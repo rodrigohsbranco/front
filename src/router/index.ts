@@ -2,7 +2,6 @@ import TokenValid from "@/plugins/verifyToken";
 import store from "@/store";
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import PageNotFound from "@/views/404.vue";
 
 Vue.use(VueRouter);
 
@@ -30,11 +29,12 @@ const routes: RouteConfig[] = [
       next("login");
     },
   },
-  // {
-  //   path: "*",
-  //   name: "PageNotFound",
-  //   component: PageNotFound,
-  // },
+  {
+    path: "*",
+    name: "notFound",
+    meta: { public: true },
+    component: () => import("@/views/NotFound.vue"),
+  },
   {
     path: "/login",
     name: "Login",
@@ -42,9 +42,6 @@ const routes: RouteConfig[] = [
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
     meta: { public: true },
-    beforeEnter(to, from, next) {
-      store.state.token && TokenValid ? next("dashboard") : next();
-    },
   },
   {
     path: "/dashboard",
