@@ -81,7 +81,8 @@ export default class extends Vue {
           this.$router.options.routes?.map((item) =>
             item.meta.menu ? this.items.push(item) : null
           );
-          this.$router.push("dashboard");
+          // debugger;
+          // this.$router.push("dashboard");
         }
       });
     } catch (error) {
