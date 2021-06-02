@@ -9,6 +9,8 @@
       loading-text="Loading... Please wait"
       :search="search"
     >
+    
+    
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -22,17 +24,25 @@
             single-line
             hide-details
           ></v-text-field>
-
+        <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+
+              <v-btn small color="primary" dark v-bind="attrs" v-on="on" class="ma-1">
                 <v-icon>mdi-plus</v-icon> Novo
+              </v-btn>  
+
+              <v-btn small color="green darken-3" dark v-bind="attrs" v-on="on" class="ma-1">
+                <v-icon>mdi-export</v-icon>
               </v-btn>
+
+
             </template>
             <v-card>
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
+              
 
               <v-card-text>
                 <v-container>
@@ -83,7 +93,7 @@
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
+                >Tem certeza que deseja excluir este item?</v-card-title
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -100,8 +110,14 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-btn small @click="editItem(item)" class="ma-1" outlined color="blue darken-3"> 
+          <v-icon>mdi-pencil </v-icon>
+          </v-btn>
+           
+        <v-btn small @click="deleteItem(item)" class="ma-1" outlined color="red darken-3">
+          <v-icon>
+          mdi-delete </v-icon>
+          </v-btn>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize"> Reset </v-btn>
