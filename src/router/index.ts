@@ -10,13 +10,7 @@ const ifAuthenticated = (to: any, from: any, next: any) => {
     next();
     return;
   }
-  router.push({
-    name: "login",
-    params: {
-      returnTo: to.path,
-      query: to.query,
-    },
-  });
+  router.push("login");
 };
 
 const routes: RouteConfig[] = [

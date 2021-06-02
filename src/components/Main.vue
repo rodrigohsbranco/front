@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app id="app">
+    <v-app>
       <Header v-if="tokenExists" />
       <v-main>
         <v-container class="pa-10" fluid>
@@ -46,8 +46,5 @@ export default class extends Vue {
 <style>
 .v-btn {
   text-transform: none !important;
-}
-#app {
-  overflow: hidden;
 }
 </style>

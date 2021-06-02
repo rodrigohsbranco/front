@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-footer fixed color="primary darken-4" padless>
+    <v-footer bg-footer fixed padless>
       <v-row justify="center" no-gutters>
-        <v-col class="primary darken-4 py-2 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} — <strong>STR</strong>
+        <v-col class="py-2 text-center dark--text" cols="12">
+          Copyright &copy; {{ new Date().getFullYear() }} — <strong>STR</strong>
         </v-col>
       </v-row>
     </v-footer>
@@ -17,4 +17,8 @@ import { Component, Vue } from "vue-property-decorator";
 export default class extends Vue {}
 </script>
 
-<style scoped></style>
+<style scoped>
+.bg-footer {
+  background-color: #f8f8f8;
+}
+</style>
