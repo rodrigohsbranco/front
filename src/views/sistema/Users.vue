@@ -2,15 +2,14 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="desserts"
-      :sort-by="sortby"
+      :items="dados"
+      :options.sync="options"
+      :server-items-length="totalItems"
       class="elevation-1"
       :loading="loading"
-      loading-text="Loading... Please wait"
+      loading-text="Carregando... Por favor aguarde"
       :search="search"
     >
-    
-    
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -20,29 +19,40 @@
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
-            label="Search"
+            label="Buscar"
+            solo
             single-line
             hide-details
           ></v-text-field>
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
-
-              <v-btn small color="primary" dark v-bind="attrs" v-on="on" class="ma-1">
-                <v-icon>mdi-plus</v-icon> Novo
-              </v-btn>  
-
-              <v-btn small color="green darken-3" dark v-bind="attrs" v-on="on" class="ma-1">
-                <v-icon>mdi-export</v-icon>
+              <v-btn
+                small
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                class="ma-1"
+              >
+                <v-icon>add</v-icon> Novo
               </v-btn>
 
-
+              <v-btn
+                small
+                color="green darken-3"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                class="ma-1"
+              >
+                <v-icon>file_download</v-icon> CSV
+              </v-btn>
             </template>
             <v-card>
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
-              
 
               <v-card-text>
                 <v-container>
@@ -110,17 +120,28 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn small @click="editItem(item)" class="ma-1" outlined color="blue darken-3"> 
-          <v-icon>mdi-pencil </v-icon>
-          </v-btn>
-           
-        <v-btn small @click="deleteItem(item)" class="ma-1" outlined color="red darken-3">
-          <v-icon>
-          mdi-delete </v-icon>
-          </v-btn>
+        <v-btn
+          x-small
+          outlined
+          @click="editItem(item)"
+          class="ma-1"
+          color="blue darken-3"
+        >
+          <v-icon small>mdi-pencil </v-icon>
+        </v-btn>
+
+        <v-btn
+          x-small
+          outlined
+          @click="deleteItem(item)"
+          class="ma-1"
+          color="red light-1"
+        >
+          <v-icon small> mdi-delete </v-icon>
+        </v-btn>
       </template>
       <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+        <v-btn color="primary" @click="getDataFromApi"> Atualizar </v-btn>
       </template>
     </v-data-table>
     <router-view />
@@ -129,6 +150,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
+import UserService from "@/services/UserService";
 
 @Component
 export default class extends Vue {
@@ -137,135 +159,105 @@ export default class extends Vue {
   dialog = false;
   dialogDelete = false;
   search = "";
-  sortby = "name";
+  totalItems = 0;
+  options = {
+    sorDesc: true,
+    page: 1,
+    itemsPerPage: 10,
+    sortBy: "name",
+  };
   headers = [
-    { text: "Dessert (100g serving)", align: "start", value: "name" },
-    { text: "Calories", value: "calories" },
-    { text: "Fat (g)", value: "fat" },
-    { text: "Carbs (g)", value: "carbs" },
-    { text: "Protein (g)", value: "protein" },
-    { text: "Actions", value: "actions", sortable: false },
+    { text: "Nome", align: "start", value: "name" },
+    { text: "Usuário", value: "username" },
+    { text: "E-mail", value: "email" },
+    { text: "Avatar", value: "avatar" },
+    { text: "Role", value: "role" },
+    { text: "Criado em", value: "created_at" },
+    { text: "Ações", value: "actions", sortable: false },
   ];
-  desserts = [];
+  dados = [];
   editedIndex = -1;
   editedItem = {
     name: "",
-    calories: 0,
-    fat: 0,
-    carbs: 0,
-    protein: 0,
+    username: "",
+    email: "",
+    avatar: "",
+    role: "",
+    created_at: "",
   };
   defaultItem = {
     name: "",
-    calories: 0,
-    fat: 0,
-    carbs: 0,
-    protein: 0,
+    username: "",
+    email: "",
+    avatar: "",
+    role: "",
+    created_at: "",
   };
 
-  created() {
-    this.initialize();
+  mounted() {
+    this.getDataFromApi();
   }
 
   get formTitle() {
     return this.editedIndex === -1 ? "Cadastrar Usuário" : "Editar Usuário";
   }
 
-  initialize() {
+  getDataFromApi() {
     this.loading = true;
-
-    //simulação de buscar dados com loading
-    setTimeout(() => {
-      this.desserts = [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-        },
-      ];
+    this.getAllUser().then((data) => {
+      this.dados = data.items;
+      this.totalItems = data.total;
       this.loading = false;
-    }, 2000);
+    });
+  }
+  async getAllUser() {
+    const { itemsPerPage, page, sortBy, sorDesc } = this.options;
+
+    // debugger;
+    let items = await UserService.getDadosPaginated(
+      this.options.page,
+      this.options.itemsPerPage
+    );
+    const total = items.length;
+
+    // if (sortBy.length === 1 && sorDesc) {
+    //   items = items.sort((a: { [x: string]: any }, b: { [x: string]: any }) => {
+    //     const sortA = a[sortBy[0]];
+    //     const sortB = b[sortBy[0]];
+
+    //     if (sorDesc[0]) {
+    //       if (sortA < sortB) return 1;
+    //       if (sortA > sortB) return -1;
+    //       return 0;
+    //     } else {
+    //       if (sortA < sortB) return -1;
+    //       if (sortA > sortB) return 1;
+    //       return 0;
+    //     }
+    //   });
+    // }
+
+    if (itemsPerPage > 0) {
+      items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    }
+
+    return { items, total };
   }
 
   editItem(item: any) {
-    this.editedIndex = this.desserts.indexOf(item);
+    this.editedIndex = this.dados.indexOf(item);
     this.editedItem = Object.assign({}, item);
     this.dialog = true;
   }
 
   deleteItem(item: any) {
-    this.editedIndex = this.desserts.indexOf(item);
+    this.editedIndex = this.dados.indexOf(item);
     this.editedItem = Object.assign({}, item);
     this.dialogDelete = true;
   }
 
   deleteItemConfirm() {
-    this.desserts.splice(this.editedIndex, 1);
+    this.dados.splice(this.editedIndex, 1);
     this.closeDelete();
   }
 
@@ -287,9 +279,9 @@ export default class extends Vue {
 
   save() {
     if (this.editedIndex > -1) {
-      Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      Object.assign(this.dados[this.editedIndex], this.editedItem);
     } else {
-      this.desserts.push(this.editedItem);
+      this.dados.push(this.editedItem);
     }
     this.close();
   }
@@ -302,6 +294,13 @@ export default class extends Vue {
   @Watch("dialogDelete")
   dialogDel(val: any) {
     val || this.closeDelete();
+  }
+
+  @Watch("options", {
+    deep: true,
+  })
+  handler() {
+    this.getDataFromApi();
   }
 }
 </script>

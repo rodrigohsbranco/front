@@ -54,7 +54,6 @@ export default class Login extends Vue {
     LoginService.login(this.credentials).then((response) => {
       this.$store.commit("LOGIN", response);
       LoginService.isValidToken(this.$store.state.token).then((response) => {
-        debugger;
         if (!response) {
           this.$router.push({ name: "Login" }).catch((err) => {
             return err;
