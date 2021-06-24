@@ -29,7 +29,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 small
-                color="primary"
+                color="info"
                 dark
                 v-bind="attrs"
                 v-on="on"
@@ -211,7 +211,7 @@ export default class extends Vue {
     });
   }
   async getAllUser() {
-    const { itemsPerPage, page, sortBy, sorDesc } = this.options;
+    const { itemsPerPage, page } = this.options;
 
     // debugger;
     let items = await UserService.getDadosPaginated(
@@ -244,22 +244,22 @@ export default class extends Vue {
     return { items, total };
   }
 
-  editItem(item: any) {
-    this.editedIndex = this.dados.indexOf(item);
-    this.editedItem = Object.assign({}, item);
-    this.dialog = true;
-  }
+  // editItem(item: any) {
+  //   this.editedIndex = this.dados.indexOf(item);
+  //   this.editedItem = Object.assign({}, item);
+  //   this.dialog = true;
+  // }
 
-  deleteItem(item: any) {
-    this.editedIndex = this.dados.indexOf(item);
-    this.editedItem = Object.assign({}, item);
-    this.dialogDelete = true;
-  }
+  // deleteItem(item: any) {
+  //   this.editedIndex = this.dados.indexOf(item);
+  //   this.editedItem = Object.assign({}, item);
+  //   this.dialogDelete = true;
+  // }
 
-  deleteItemConfirm() {
-    this.dados.splice(this.editedIndex, 1);
-    this.closeDelete();
-  }
+  // deleteItemConfirm() {
+  //   this.dados.splice(this.editedIndex, 1);
+  //   this.closeDelete();
+  // }
 
   close() {
     this.dialog = false;

@@ -34,7 +34,7 @@ declare global {
     interface Credentials {
       //   scope: string;
       //   scopeEntityId: string | (string | null)[];
-      username: string;
+      login: string;
       password: string;
     }
 

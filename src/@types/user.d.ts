@@ -1,7 +1,7 @@
 export default interface IuserInfo {
-  username: string;
-  email: string;
-  avatar: string;
+  user_login: string;
+  user_email: string;
+  user_avatar: string;
   // role: {
   //   name: string;
   //   description: string;

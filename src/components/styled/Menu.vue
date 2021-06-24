@@ -3,16 +3,16 @@
     <v-list>
       <v-list-item>
         <v-list-item-avatar>
-          <v-img :src="`${user.avatar}`"></v-img>
+          <v-img :src="`${user.user_avatar}`"></v-img>
         </v-list-item-avatar>
       </v-list-item>
 
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{ user.username }}
+            {{ user.user_login }}
           </v-list-item-title>
-          <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{ user.user_email }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -20,7 +20,7 @@
 
     <v-list nav dense>
       <div v-for="item in items" :key="item.name">
-        <v-list-item v-if="!item.children" :to="item.name" class="v-list-item">
+        <v-list-item color="accent" v-if="!item.children" :to="item.name">
           <v-list-item-icon>
             <v-icon>{{ item.meta.icon }}</v-icon>
           </v-list-item-icon>
@@ -32,10 +32,11 @@
           v-else
           :key="item.name"
           no-action
+          color="accent"
           :prepend-icon="item.meta.icon"
           :value="false"
         >
-          <template v-slot:activator>
+          <template color="accent" v-slot:activator>
             <v-list-item-title>{{ item.meta.desc }}</v-list-item-title>
           </template>
 
@@ -64,9 +65,9 @@ import { RouteConfig } from "vue-router/types/router";
 @Component({})
 export default class extends Vue {
   user: IuserInfo = {
-    username: "",
-    email: "",
-    avatar: "",
+    user_login: "",
+    user_email: "",
+    user_avatar: "",
   };
   items: RouteConfig[] = [];
 
@@ -74,15 +75,13 @@ export default class extends Vue {
     try {
       await userService.getInfo(this.$store.state.token).then((response) => {
         if (response) {
-          this.user.username = response.user.username;
-          this.user.email = response.user.email;
-          this.user.avatar = response.user.avatar;
+          this.user.user_login = response.user.user_login;
+          this.user.user_email = response.user.user_email;
+          this.user.user_avatar = response.user.user_avatar;
 
           this.$router.options.routes?.map((item) =>
             item.meta.menu ? this.items.push(item) : null
           );
-          // debugger;
-          // this.$router.push("dashboard");
         }
       });
     } catch (error) {
@@ -105,8 +104,5 @@ export default class extends Vue {
   > .v-list-group__items
   > .v-list-item {
   padding: 0 8px;
-}
-selected {
-  color: white;
 }
 </style>

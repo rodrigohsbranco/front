@@ -20,8 +20,8 @@ export default new Vuex.Store({
       // localStorage.setItem("refreshToken", data.refresh_token);
       localStorage.setItem("expire", data.expire);
       localStorage.setItem("token", data.token);
-      localStorage.setItem("userId", data.user.id);
-      state.userId = data.user.id;
+      localStorage.setItem("userId", data.user.id_user);
+      state.userId = data.user.id_user;
       state.token = data.token;
       state.expire = data.expire;
     },

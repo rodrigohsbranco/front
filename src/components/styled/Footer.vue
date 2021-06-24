@@ -2,7 +2,7 @@
   <div>
     <v-footer bg-footer fixed padless>
       <v-row justify="center" no-gutters>
-        <v-col class="py-2 text-center dark--text" cols="12">
+        <v-col class="py-2 text-center primary light--text" cols="12">
           Copyright &copy; {{ new Date().getFullYear() }} — <strong>STR</strong>
         </v-col>
       </v-row>
@@ -19,6 +19,6 @@ export default class extends Vue {}
 
 <style scoped>
 .bg-footer {
-  background-color: #f8f8f8;
+  background-color: primary;
 }
 </style>

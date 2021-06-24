@@ -77,7 +77,7 @@
               <v-sparkline
                 :labels="labels"
                 :value="value"
-                color="white"
+                color="primary"
                 line-width="2"
                 padding="16"
               ></v-sparkline>

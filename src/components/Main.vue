@@ -8,7 +8,6 @@
             <router-view />
           </v-fade-transition>
         </v-container>
-        <Footer />
       </v-main>
       <alert-message :attributes="alert" />
     </v-app>
